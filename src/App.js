@@ -2,7 +2,7 @@ import Recipe from "./Recipe";
 
 function App() {
   return (
-    <div>
+    <div className="content">
       <Recipe/>
     </div>
   );
