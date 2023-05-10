@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: "Quicksand";
   color: #333;
+  background-color: #dddddd;
 }
 
 .navbar {
@@ -37,4 +38,5 @@ body {
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
+  background-color: #eeeeee;
 }
