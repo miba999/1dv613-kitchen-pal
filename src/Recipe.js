@@ -18,10 +18,10 @@ export default function Recipe() {
   }, []);
 
   return (
-    <>
+    <div className="recipe-list">
       {recipes.map((recipe) => {
         return (
-          <div>
+          <div class="recipe">
             <h1>{recipe.title}</h1>
             <p>Tidsåtgång: {recipe.duration} min</p>
             <IngredientList path={`recipes/${recipe.id}/ingredients`} />
@@ -30,6 +30,9 @@ export default function Recipe() {
           </div>
         );
       })}
-    </>
+    </div>
+
+
+
   );
 }
