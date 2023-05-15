@@ -1,4 +1,3 @@
-
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
@@ -29,10 +28,8 @@ export default function Recipe() {
             <InstructionList data={recipe.instructions}></InstructionList>
           </div>
         );
-      })}
+      })} 
     </div>
-
-
-
   );
+  
 }
