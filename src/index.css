@@ -4,7 +4,7 @@ body {
   margin: 0;
   font-family: "Quicksand";
   color: #333;
-  background-color: #dddddd;
+  background-color: #fdfdfd;
 }
 
 .navbar {
@@ -38,5 +38,17 @@ body {
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
-  background-color: #eeeeee;
+  background-color:  #fdfdfd;
+}
+
+.recipe {
+  background-color: #fdfdfd;
+  box-shadow: 0 1px 11px 0 rgba(0,0,0, 0.08);
+  border-radius: 8px;
+  margin: 10px;
+  padding: 1px 20px
+}
+
+.recipe:hover {
+  background-color: #f1f1f1;
 }
