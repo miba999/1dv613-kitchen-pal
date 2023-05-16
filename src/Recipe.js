@@ -1,17 +1,21 @@
-import { db } from "./firebase-config";
-import { collection, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import IngredientList from "./IngredientList";
-import InstructionList from "./InstructionList";
+import { db } from './firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import IngredientList from './IngredientList';
+import InstructionList from './InstructionList';
 
 export default function Recipe() {
   const [recipes, setRecipes] = useState([]);
-  const recipeCollectionRef = collection(db, "recipes");
+  const recipeCollectionRef = collection(db, 'recipes');
 
   useEffect(() => {
     const getRecipes = async () => {
-      const data = await getDocs(recipeCollectionRef);
-      setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      try {
+        const data = await getDocs(recipeCollectionRef);
+        setRecipes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      } catch (error) {
+        console.error('Error fetching recipes: ', error);
+      }
     };
     getRecipes();
   }, []);
@@ -20,7 +24,7 @@ export default function Recipe() {
     <div className="recipe-list">
       {recipes.map((recipe) => {
         return (
-          <div class="recipe">
+          <div className="recipe" key={recipe.id}>
             <h1>{recipe.title}</h1>
             <p>Tidsåtgång: {recipe.duration} min</p>
             <IngredientList path={`recipes/${recipe.id}/ingredients`} />
@@ -28,8 +32,7 @@ export default function Recipe() {
             <InstructionList data={recipe.instructions}></InstructionList>
           </div>
         );
-      })} 
+      })}
     </div>
   );
-  
 }
