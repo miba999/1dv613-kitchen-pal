@@ -6,7 +6,7 @@
 * {
   color: #233748;
   margin: 0;
-  /* padding: 0; */
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -64,4 +64,17 @@ header nav a.active {
   margin: 10px;
   max-width: 500px;
   padding: 1px 20px;
+}
+
+.recipe h1 {
+  font-size: 32px;
+  padding-top: 8px;
+}
+
+.recipe ul {
+  padding-inline-start: 40px;
+}
+
+.recipe ol {
+  padding-inline-start: 40px;
 }
