@@ -1,54 +1,67 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+:root {
+  --primary: #008aa4;
+  --secondary: #fff;
+}
+
+* {
+  color: #233748;
+  margin: 0;
+  /* padding: 0; */
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  font-family: "Quicksand";
-  color: #333;
-  background-color: #fdfdfd;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7fafc;
 }
 
-.navbar {
-  padding: 20px;
+p {
+  margin: 10px 0;
+}
+
+/* navbar */
+header nav {
+  background-color: var(--secondary);
   display: flex;
   align-items: center;
-  max-width: 600px;
-  margin: 0 auto;
-  border-bottom: 1px solid #f2f2f2;
+  gap: 16px;
+  border-bottom: 2px solid #f2f2f2;
+  height: 64px;
 }
 
-.navbar h1 {
-  color: #f1356d;
+header nav h1 {
+  color: var(--primary);
+  font-weight: bold;
+  padding-left: 20px;
 }
 
-.navbar .links {
+.links {
+  padding-right: 20px;
   margin-left: auto;
 }
 
-.navbar a {
-  margin-left: 16px;
+header nav a {
   text-decoration: none;
-  padding: 6px;
+  cursor: pointer;
+  margin: 16px;
 }
 
-.navbar a:hover {
-  color: #f1356d;
+header nav a:hover {
+  color: var(--primary);
 }
 
-.content {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color:  #fdfdfd;
+header nav a.active {
+  color: var(--primary);
+  border-bottom: 1px solid var(--primary);
 }
 
+/* recipes */ 
 .recipe {
   background-color: #fdfdfd;
-  box-shadow: 0 1px 11px 0 rgba(0,0,0, 0.08);
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   margin: 10px;
-  padding: 1px 20px
-}
-
-.recipe:hover {
-  background-color: #f1f1f1;
+  max-width: 500px;
+  padding: 1px 20px;
 }
