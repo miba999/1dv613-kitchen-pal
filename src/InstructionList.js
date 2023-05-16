@@ -3,9 +3,9 @@ import React from 'react'
 const InstructionList = ({ data }) => {
   return (
     <ol>
-      {data.map((instruction) => {
+      {data.map((instruction, index) => {
         return (
-          <li>
+          <li key={index}>
             <p>{instruction}</p>
           </li>
         );
