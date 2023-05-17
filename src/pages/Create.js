@@ -5,24 +5,33 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <div className="create">
       <form onSubmit={handleSubmit}>
-        <label>Title:</label>
-        <input
-          type="text"
-          required
-          value={title}
-          // onChange={(e) => setTitle(e.target.value)}
-        />
-        <label>Something:</label>
-        <textarea
-          required
-          // value={body}
-          // onChange={(e) => setBody(e.target.value)}
-        ></textarea>
+        <h2>Lägg till recept</h2>
+        <label>
+          <span>Titel:</span>
+          <input
+            type="text"
+            placeholder="Lägg till ett namn för receptet"
+            required
+            // value={title}
+            // onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
+
+        <label>
+          <span>Text:</span>
+          <textarea
+            placeholder="Lägg till beskrivande text"
+            required
+            // value={body}
+            // onChange={(e) => setBody(e.target.value)}
+          ></textarea>
+        </label>
+
         {/* <label>Blog author</label>
         <select
           value={author}
