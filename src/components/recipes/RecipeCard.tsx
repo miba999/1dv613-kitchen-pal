@@ -60,7 +60,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
 
         {recipe.tags && recipe.tags.length > 0 && (
           <CardFooter className="flex gap-2 flex-wrap pt-3">
-            {recipe.tags.slice(0, 2).map((tag) => (
+            {recipe.tags.slice(0, 3).map((tag) => (
               <Badge key={tag} variant="outline">
                 {tag}
               </Badge>
