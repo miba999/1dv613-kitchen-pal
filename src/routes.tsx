@@ -12,8 +12,8 @@ import Signup from '@/pages/public/signup'
 import NotFoundPage from '@/pages/public/not-found'
 
 // Protected Pages
-import RecipeList from '@/pages/app/recipes'
-import RecipeDetail from '@/pages/app/recipes/detail'
+import RecipesPage from '@/pages/app/recipes'
+import RecipeDetailPage from '@/pages/app/recipes/detail'
 import RecipeNew from '@/pages/app/recipes/new'
 import RecipeEdit from '@/pages/app/recipes/edit'
 
@@ -39,9 +39,9 @@ export const router = createBrowserRouter([
         children: [
           { path: '/dashboard', element: <Dashboard /> },
           { path: '/profile', element: <Profile /> },
-          { path: '/recipes', element: <RecipeList /> },
+          { path: '/recipes', element: <RecipesPage /> },
           { path: '/recipes/new', element: <RecipeNew /> },
-          { path: '/recipes/:id', element: <RecipeDetail /> },
+          { path: '/recipes/:id', element: <RecipeDetailPage /> },
           { path: '/recipes/:id/edit', element: <RecipeEdit /> },
           { path: '/shopping-list', element: <ShoppingList /> },
         ],
