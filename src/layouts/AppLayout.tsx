@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useAuthUser } from '@/context/AuthContext'
+import { useAuthUser } from '@/hooks/useAuthUser'
 import Header from './Header'
 import AppNav from './AppNav'
 import { Button } from '@/components/ui/button'
