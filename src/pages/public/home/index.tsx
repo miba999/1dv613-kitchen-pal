@@ -1,5 +1,5 @@
 import { Link, Navigate } from 'react-router-dom'
-import { useAuthUser } from '@/context/AuthContext'
+import { useAuthUser } from '@/hooks/useAuthUser'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 import { Button } from '@/components/ui/button'
 
