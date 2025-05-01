@@ -1,5 +1,11 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
+import { auth } from '../firebase/firebaseConfig'
 
 export const logIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password)
@@ -14,6 +20,7 @@ export const logOut = () => {
 }
 
 export const googleSignIn = () => {
-  const googleAuthProvider = new GoogleAuthProvider();
+  const googleAuthProvider = new GoogleAuthProvider()
+
   return signInWithPopup(auth, googleAuthProvider)
 }
