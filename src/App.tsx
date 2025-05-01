@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import router from './routes'
-import { AuthUserProvider } from './context/AuthContext'
+import { AuthUserProvider } from '@/context/AuthUserProvider'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface IAppProps {}
