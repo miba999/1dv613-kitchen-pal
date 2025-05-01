@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label'
 import { Icons } from '@/components/ui/icons'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 import { UserSignIn } from '@/types'
-import { useAuthUser } from '@/context/AuthContext'
+import { useAuthUser } from '@/hooks/useAuthUser'
 
 const initialValue: UserSignIn = {
   email: '',
