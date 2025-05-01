@@ -16,7 +16,7 @@ import LoadingSpinner from '@/components/ui/loading-spinner'
 
 import { Icons } from '@/components/ui/icons'
 import { UserLogIn } from '@/types'
-import { useAuthUser } from '@/context/AuthContext'
+import { useAuthUser } from '@/hooks/useAuthUser'
 
 const initialValue: UserLogIn = {
   email: '',
