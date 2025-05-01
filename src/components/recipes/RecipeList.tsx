@@ -1,4 +1,3 @@
-
 import RecipeCard from '@/components/recipes/RecipeCard'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 import { useRecipes } from '@/hooks/useRecipes'
@@ -18,11 +17,7 @@ const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
   }
 
   if (error) {
-    return (
-      <div className="text-center text-red-500 mt-8">
-        Något gick fel: {error.message}
-      </div>
-    )
+    return <div className="text-center text-red-500 mt-8">Något gick fel: {error.message}</div>
   }
 
   return (
