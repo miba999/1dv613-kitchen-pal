@@ -7,6 +7,7 @@ const recipesRef = collection(db, 'recipes')
 
 export const getAllRecipes = async (): Promise<Recipe[]> => {
   const snapshot = await getDocs(recipesRef)
+
   return snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
