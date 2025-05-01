@@ -1,16 +1,11 @@
-import * as React from 'react';
+import * as React from 'react'
+import RecipeDetail from '@/components/recipes/RecipeDetail'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IRecipeDetailPageProps {
-  
-}
+interface IRecipeDetailPageProps {}
 
 const RecipeDetailPage: React.FunctionComponent<IRecipeDetailPageProps> = () => {
-  return (
-    <div>
-      Recipe Details
-    </div>
-  );
+  return <RecipeDetail />
 }
 
-export default RecipeDetailPage;
+export default RecipeDetailPage
