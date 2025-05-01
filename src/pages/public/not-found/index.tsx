@@ -1,16 +1,10 @@
-import * as React from 'react';
+import * as React from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface INotFoundPageProps {
-  
-}
+interface INotFoundPageProps {}
 
 const NotFoundPage: React.FunctionComponent<INotFoundPageProps> = () => {
-  return (
-    <div>
-      Error
-    </div>
-  );
+  return <div>Error</div>
 }
 
-export default NotFoundPage;
+export default NotFoundPage
