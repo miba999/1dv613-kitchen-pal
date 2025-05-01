@@ -34,6 +34,7 @@ const SignUp: React.FunctionComponent<ISignupProps> = () => {
 
   const handleGoogleSignIn = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+
     try {
       await googleSignIn()
       navigate('/')
@@ -47,8 +48,10 @@ const SignUp: React.FunctionComponent<ISignupProps> = () => {
 
     if (userInfo.password !== userInfo.confirmPassword) {
       setError('Lösenord matchar inte')
+
       return
     }
+
     try {
       await signUp(userInfo.email, userInfo.password)
       navigate('/')
