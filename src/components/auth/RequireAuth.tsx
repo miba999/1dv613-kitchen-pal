@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuthUser } from '@/context/AuthContext' // Adjust the import path as necessary
+import { useAuthUser } from '@/hooks/useAuthUser'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 
 const RequireAuth: React.FunctionComponent = () => {
@@ -10,8 +10,8 @@ const RequireAuth: React.FunctionComponent = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-      <LoadingSpinner size={40} />
-    </div>
+        <LoadingSpinner size={40} />
+      </div>
     )
   }
 
