@@ -1,7 +1,7 @@
-import { useAuthUser } from "@/context/AuthContext";
+import { useAuthUser } from '@/hooks/useAuthUser'
 
 const Dashboard = () => {
-  const { user } = useAuthUser();
+  const { user } = useAuthUser()
 
   return (
     <div className="p-6">
@@ -10,7 +10,7 @@ const Dashboard = () => {
         Välkommen tillbaka! Gå till receptlistan för att börja planera dina måltider.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
