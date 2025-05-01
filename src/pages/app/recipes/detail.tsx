@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IRecipeDetailProps {
+interface IRecipeDetailPageProps {
   
 }
 
-const RecipeDetail: React.FunctionComponent<IRecipeDetailProps> = () => {
+const RecipeDetailPage: React.FunctionComponent<IRecipeDetailPageProps> = () => {
   return (
     <div>
       Recipe Details
@@ -13,4 +13,4 @@ const RecipeDetail: React.FunctionComponent<IRecipeDetailProps> = () => {
   );
 }
 
-export default RecipeDetail;
+export default RecipeDetailPage;
