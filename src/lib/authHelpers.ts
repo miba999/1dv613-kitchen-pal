@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import { auth } from '../firebase/firebaseConfig'
+import { auth } from '@/firebase/firebaseConfig'
 
 export const logIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password)
