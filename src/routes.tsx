@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
       {
         element: <AppLayout />,
         children: [
-          { path: "/dashboard", element: <Dashboard /> },
+          { path: '/dashboard', element: <Dashboard /> },
           { path: '/profile', element: <Profile /> },
           { path: '/recipes', element: <RecipeList /> },
           { path: '/recipes/new', element: <RecipeNew /> },
