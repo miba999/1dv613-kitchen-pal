@@ -1,9 +1,7 @@
 import RecipeList from '@/components/recipes/RecipeList'
 
 const RecipesPage = () => {
-  return (
-      <RecipeList />
-  )
+  return <RecipeList />
 }
 
 export default RecipesPage
