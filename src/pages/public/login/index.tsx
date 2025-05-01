@@ -50,6 +50,7 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
       if (import.meta.env.DEV) {
         console.error('Google Sign-In Error:', error)
       }
+
       setFormError('Google-inloggning misslyckades. Försök igen.')
     }
   }
@@ -89,6 +90,7 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
         if (import.meta.env.DEV) {
           console.error('Firebase error:', error)
         }
+
         // Show nice UI error based on Firebase error codes
         switch (error.code) {
           case 'auth/user-not-found':
