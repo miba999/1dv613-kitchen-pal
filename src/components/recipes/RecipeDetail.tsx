@@ -24,7 +24,13 @@ const RecipeDetail: React.FC = () => {
     <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
       {/* Title and image in a responsive layout */}
       <div className="flex flex-col md:flex-row gap-6 items-start">
-        <RecipeHeader title={recipe.title} description={recipe.description} tags={recipe.tags} />
+        <RecipeHeader
+          title={recipe.title}
+          description={recipe.description}
+          cookTime={recipe.cookTime}
+          diet={recipe.diet}
+          tags={recipe.tags}
+        />
         <RecipeImage src={recipe.imageUrl} alt={recipe.title} />
       </div>
 
@@ -36,6 +42,13 @@ const RecipeDetail: React.FC = () => {
       />
 
       <InstructionsSection steps={recipe.steps} />
+
+      {recipe.notes && (
+        <div className="bg-muted p-4 rounded-md border space-y-2">
+          <h2 className="text-xl font-semibold">Kommentar</h2>
+          <p className="text-muted-foreground whitespace-pre-line">{recipe.notes}</p>
+        </div>
+      )}
     </div>
   )
 }
