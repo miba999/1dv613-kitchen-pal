@@ -5,7 +5,9 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Ingredient } from '@/types/recipe'
 import { NewRecipe } from '@/types/newRecipe'
-import { IngredientsSection } from './IngredientsSection'
+import { IngredientsSection } from './form/IngredientsSection'
+import TitleInput from './form/TitleInput'
+import DescriptionInput from './form/DescriptionInput'
 
 interface RecipeFormProps {
   onSubmit: (data: NewRecipe, imageFile?: File) => void
@@ -61,15 +63,17 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto p-4">
-      <div>
-        <Label>Titel</Label>
-        <Input value={title} onChange={(e) => setTitle(e.target.value)} required />
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto pl-4 pr-4">
+      <h1 className="text-2xl font-bold">Skapa nytt recept</h1>
 
-      <div>
-        <Label>Beskrivning</Label>
-        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+      <TitleInput value={title} onChange={setTitle} />
+
+      <DescriptionInput value={description} onChange={setDescription} />
+
+
+      <div className="flex gap-4 mt-8">
+        <Button variant="outline">Lägg till recept</Button>
+        <Button variant="secondary">Ändra recept</Button>
       </div>
 
       <div className="flex gap-4">
