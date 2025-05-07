@@ -1,20 +1,31 @@
 import { Badge } from '@/components/ui/badge'
-import { Clock } from 'lucide-react' // If you're using lucide icons
+import { Clock } from 'lucide-react'
 import React from 'react'
 
 interface RecipeHeaderProps {
   title: string
   description: string
   cookTime: number
-  diet?: string
+  diets?: string[]
   tags?: string[]
 }
+
+// Same dietOptions array you provided
+const dietOptions = [
+  { label: 'Vegan', value: 'vegan', emoji: '🌱' },
+  { label: 'Vegetarian', value: 'vegetarian', emoji: '🥦' },
+  { label: 'Glutenfri', value: 'gluten-free', emoji: '🚫🌾' },
+  { label: 'Laktosfri', value: 'lactose-free', emoji: '🥛❌' },
+  { label: 'Keto', value: 'keto', emoji: '🥩' },
+  { label: 'Paleo', value: 'paleo', emoji: '🍖' },
+  { label: 'Pescetarian', value: 'pescatarian', emoji: '🐟' },
+]
 
 const RecipeHeader: React.FC<RecipeHeaderProps> = ({
   title,
   description,
   cookTime,
-  diet,
+  diets,
   tags,
 }) => {
   return (
@@ -28,13 +39,23 @@ const RecipeHeader: React.FC<RecipeHeaderProps> = ({
           <span>{cookTime} min</span>
         </div>
 
-        {diet && (
-          <Badge variant="secondary" className="text-sm">
-            {diet}
-          </Badge>
+        {/* Diets */}
+        {diets && diets.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {diets.map((diet) => {
+              const match = dietOptions.find((d) => d.value === diet)
+
+              return (
+                <Badge key={diet} variant="secondary" className="text-sm">
+                  {match ? `${match.emoji} ${match.label}` : diet}
+                </Badge>
+              )
+            })}
+          </div>
         )}
       </div>
 
+      {/* Tags */}
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
