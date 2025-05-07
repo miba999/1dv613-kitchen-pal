@@ -9,7 +9,7 @@ interface DescriptionInputProps {
 const DescriptionInput: React.FC<DescriptionInputProps> = ({ value, onChange }) => {
   return (
     <div>
-      <Label htmlFor="description" className="text-xl font-bold pb-1 block">
+      <Label htmlFor="description" className="text-base font-semibold pb-1 block">
         Beskrivning
       </Label>
       <Textarea
