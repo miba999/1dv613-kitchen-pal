@@ -28,7 +28,7 @@ const RecipeDetail: React.FC = () => {
           title={recipe.title}
           description={recipe.description}
           cookTime={recipe.cookTime}
-          diet={recipe.diet}
+          diets={recipe.diets}
           tags={recipe.tags}
         />
         <RecipeImage src={recipe.imageUrl} alt={recipe.title} />
