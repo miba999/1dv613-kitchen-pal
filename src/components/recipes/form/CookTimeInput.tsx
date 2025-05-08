@@ -19,7 +19,7 @@ const CookTimeInput: React.FC<CookTimeInputProps> = ({ value, onChange }) => {
         onChange={(e) => onChange(+e.target.value)}
         required
         min={1}
-        className="w-32"
+        className="w-32 focus-visible:ring-offset-0 no-spinner"
       />
     </div>
   )
