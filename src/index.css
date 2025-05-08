@@ -118,3 +118,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide spinner arrows in number inputs */
+input[type='number'].no-spinner::-webkit-inner-spin-button,
+input[type='number'].no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'].no-spinner {
+  appearance: textfield; /* Firefox */
+}
