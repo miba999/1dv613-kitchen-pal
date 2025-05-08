@@ -46,7 +46,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, label = 'Taggar', 
           onKeyDown={handleKeyDown}
           placeholder={placeholder || 'Skriv en tagg och tryck enter'}
         />
-        <Button type="button" onClick={addTag}>
+        <Button type="button" variant="outline" onClick={addTag}>
           Lägg till
         </Button>
       </div>
