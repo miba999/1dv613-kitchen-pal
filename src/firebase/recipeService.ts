@@ -45,6 +45,10 @@ export const addRecipe = async (data: NewRecipe, imageFile?: File): Promise<stri
 
   if (imageFile) {
     imageUrl = await uploadRecipeImage(imageFile, user.uid)
+
+    if (!imageUrl) {
+      throw new Error('Failed to upload image')
+    }
   }
 
   const recipeToSave = {
@@ -54,15 +58,12 @@ export const addRecipe = async (data: NewRecipe, imageFile?: File): Promise<stri
     createdBy: user.uid,
   }
 
-  const keys = Object.keys(recipeToSave) as Array<keyof typeof recipeToSave>
+  // Remove undefined properties
+  const cleanedData = Object.fromEntries(
+    Object.entries(recipeToSave).filter(([, value]) => value !== undefined)
+  )
 
-  keys.forEach((key) => {
-    if (recipeToSave[key] === undefined) {
-      delete recipeToSave[key]
-    }
-  })
-
-  const docRef = await addDoc(recipesRef, recipeToSave)
+  const docRef = await addDoc(recipesRef, cleanedData)
 
   return docRef.id
 }
