@@ -10,15 +10,14 @@ interface RecipeHeaderProps {
   tags?: string[]
 }
 
-// Same dietOptions array you provided
 const dietOptions = [
-  { label: 'Vegan', value: 'vegan', emoji: '🌱' },
-  { label: 'Vegetarian', value: 'vegetarian', emoji: '🥦' },
-  { label: 'Glutenfri', value: 'gluten-free', emoji: '🚫🌾' },
-  { label: 'Laktosfri', value: 'lactose-free', emoji: '🥛❌' },
-  { label: 'Keto', value: 'keto', emoji: '🥩' },
-  { label: 'Paleo', value: 'paleo', emoji: '🍖' },
-  { label: 'Pescetarian', value: 'pescatarian', emoji: '🐟' },
+  { label: 'vegansk', value: 'vegan', emoji: '🌱' },
+  { label: 'vegetarisk', value: 'vegetarian', emoji: '🥦' },
+  { label: 'glutenfri', value: 'gluten-free', emoji: '🚫🌾' },
+  { label: 'laktosfri', value: 'lactose-free', emoji: '🥛❌' },
+  { label: 'keto', value: 'keto', emoji: '🥩' },
+  { label: 'paleo', value: 'paleo', emoji: '🍖' },
+  { label: 'pescetarian', value: 'pescatarian', emoji: '🐟' },
 ]
 
 const RecipeHeader: React.FC<RecipeHeaderProps> = ({
