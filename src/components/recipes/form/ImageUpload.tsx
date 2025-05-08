@@ -84,7 +84,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imageFile, setImageFile, maxS
               setImageFile(undefined)
               setError(null)
             }}
-            className="absolute top-2 right-2 bg-white/80 hover:bg-white text-red-600 rounded-full p-1 shadow-sm"
+            className="absolute top-2 right-2 bg-white/80 hover:bg-white text-red-600 rounded-full p-1 shadow-sm cursor-pointer"
             aria-label="Ta bort bild"
           >
             <X className="w-4 h-4" />
