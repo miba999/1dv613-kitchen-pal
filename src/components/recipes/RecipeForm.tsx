@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Ingredient } from '@/types/recipe'
 import { NewRecipe } from '@/types/newRecipe'
-import { IngredientsSection } from '@/components/recipes/form/IngredientsSection'
+import IngredientInput from '@/components/recipes/form/IngredientInput'
 import DietCheckboxGroup from '@/components/recipes/form/DietCheckboxGroup'
 import TitleInput from '@/components/recipes/form/TitleInput'
 import DescriptionInput from '@/components/recipes/form/DescriptionInput'
@@ -12,15 +12,10 @@ import CookTimeInput from '@/components/recipes/form/CookTimeInput'
 import PortionsInput from '@/components/recipes/form/PortionsInput'
 import TagsInput from '@/components/recipes/form/TagsInput'
 import ImageUpload from '@/components/recipes/form/ImageUpload'
+import LoadingSpinner from '@/components/ui/loading-spinner'
 
 interface RecipeFormProps {
   onSubmit: (data: NewRecipe, imageFile?: File) => void
-}
-
-const defaultIngredient: Ingredient = {
-  name: '',
-  quantity: 0,
-  unit: '',
 }
 
 const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
@@ -31,31 +26,44 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
   const [diets, setDiets] = useState<string[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [steps, setSteps] = useState([''])
-  const [ingredients, setIngredients] = useState<Ingredient[]>([defaultIngredient])
+  const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [imageFile, setImageFile] = useState<File | undefined>()
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const handleAddStep = () => setSteps([...steps, ''])
+
   const handleStepChange = (index: number, value: string) => {
     const updated = [...steps]
     updated[index] = value
     setSteps(updated)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const recipe: NewRecipe = {
-      title,
-      description,
-      portions,
-      cookTime,
-      diets: diets.length > 0 ? diets : undefined,
-      tags: tags.length > 0 ? tags : undefined,
-      ingredients,
-      steps,
-    }
+    if (isSubmitting) return
 
-    onSubmit(recipe, imageFile)
+    setIsSubmitting(true)
+
+    try {
+      const recipe: NewRecipe = {
+        title,
+        description,
+        portions,
+        cookTime,
+        diets: diets.length > 0 ? diets : undefined,
+        tags: tags.length > 0 ? tags : undefined,
+        ingredients,
+        steps,
+      }
+
+      await onSubmit(recipe, imageFile)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -77,13 +85,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
 
       <ImageUpload imageFile={imageFile} setImageFile={setImageFile} />
 
-      {/* Ingredients */}
-      <IngredientsSection ingredients={ingredients} setIngredients={setIngredients} />
-
-      <div className="flex gap-4 mt-8">
-        <Button variant="outline">Lägg till recept</Button>
-        <Button variant="secondary">Ändra recept</Button>
-      </div>
+      <IngredientInput ingredients={ingredients} setIngredients={setIngredients} />
 
       {/* Steps */}
       <div>
@@ -102,7 +104,28 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
         </Button>
       </div>
 
-      <Button type="submit">Spara recept</Button>
+      <div className="flex gap-4 mt-8">
+        <Button variant="outline">Lägg till recept</Button>
+        <Button type="button" variant="ghost">
+          Lägg till tagg
+        </Button>
+        <Button type="button" variant="outline">
+          Lägg till ingrediens
+        </Button>
+        <Button type="button" variant="destructive">
+          Ta bort ingrediens
+        </Button>
+      </div>
+
+      <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
+        {isSubmitting ? (
+          <div className="flex items-center gap-2">
+            <LoadingSpinner size={16} /> Sparar...
+          </div>
+        ) : (
+          'Spara recept'
+        )}
+      </Button>
     </form>
   )
 }
