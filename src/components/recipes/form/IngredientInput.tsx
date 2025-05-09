@@ -1,90 +1,132 @@
+import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { Trash2 } from 'lucide-react'
 import { Ingredient } from '@/types/recipe'
-import { Trash2, Plus } from 'lucide-react'
 
-interface IngredientsSectionProps {
+interface IngredientInputProps {
   ingredients: Ingredient[]
-  setIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>
+  setIngredients: (ings: Ingredient[]) => void
 }
 
-export const IngredientsSection: React.FC<IngredientsSectionProps> = ({
-  ingredients,
-  setIngredients,
-}) => {
-  const handleChange = (index: number, field: keyof Ingredient, value: string | number) => {
-    const updated = [...ingredients]
-    updated[index] = {
-      ...updated[index],
-      [field]: field === 'quantity' ? Number(value) : value,
+const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngredients }) => {
+  const [draft, setDraft] = useState('')
+  const [editingIndex, setEditingIndex] = useState<number | null>(null)
+
+  // Regex to extract quantity + unit + name
+  const parseIngredient = (raw: string): Ingredient => {
+    const pattern = /^(\d+(?:[.,]\d+)?)\s*(\w+)?\s+(.+)$/i
+    const match = raw.trim().match(pattern)
+
+    if (!match) return { name: raw.trim() }
+
+    return {
+      quantity: parseFloat(match[1].replace(',', '.')),
+      unit: match[2] || '',
+      name: match[3],
     }
+  }
+
+  const handleAdd = () => {
+    if (!draft.trim()) return
+
+    const parsed = parseIngredient(draft)
+
+    setIngredients([...ingredients, parsed])
+    setDraft('')
+  }
+
+  const handleUpdate = (index: number, value: string) => {
+    const updated = [...ingredients]
+    updated[index] = parseIngredient(value)
     setIngredients(updated)
+    setEditingIndex(null)
   }
 
-  const handleAddIngredient = () => {
-    setIngredients([...ingredients, { name: '', quantity: 0, unit: '', note: '' }])
+  const handleKeyDown = (e: React.KeyboardEvent, index?: number) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+
+      if (index !== undefined) {
+        handleUpdate(index, (e.target as HTMLInputElement).value)
+      } else {
+        handleAdd()
+      }
+    }
   }
 
-  const handleRemoveIngredient = (index: number) => {
+  const handleRemove = (index: number) => {
     const updated = ingredients.filter((_, i) => i !== index)
     setIngredients(updated)
   }
 
+  const formatIngredient = (ing: Ingredient) => {
+    const qty = ing.quantity ? `${ing.quantity}${ing.unit ? ' ' + ing.unit : ''}` : ''
+
+    return (
+      <>
+        {qty && <strong>{qty}</strong>}
+        {qty && ' '}
+        {ing.name}
+      </>
+    )
+  }
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <Label className="text-lg">Ingredienser</Label>
 
-      {ingredients.map((ingredient, index) => (
-        <div
-          key={index}
-          className="grid grid-cols-4 gap-3 items-center"
-        >
-          <Input
-            type="number"
-            className="bg-transparent focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Mängd"
-            value={ingredient.quantity}
-            onChange={(e) => handleChange(index, 'quantity', e.target.value)}
-          />
-          <Input
-            className="bg-transparent border-none focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Enhet"
-            value={ingredient.unit || ''}
-            onChange={(e) => handleChange(index, 'unit', e.target.value)}
-          />
-          <Input
-            className="bg-transparent border-none focus-visible:ring-2 focus-visible:ring-primary"
-            placeholder="Namn"
-            value={ingredient.name}
-            onChange={(e) => handleChange(index, 'name', e.target.value)}
-          />
-
-          <div className="flex items-center gap-2">
-            <Input
-              className="bg-transparent border-none focus-visible:ring-2 focus-visible:ring-primary"
-              placeholder="Kommentar"
-              value={ingredient.note || ''}
-              onChange={(e) => handleChange(index, 'note', e.target.value)}
-            />
-            {ingredients.length > 1 && (
+      {ingredients.length > 0 && (
+        <div className="space-y-1">
+          {ingredients.map((ing, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between border-b py-1 px-1 hover:bg-muted/40 transition-colors"
+            >
+              {editingIndex === index ? (
+                <Input
+                  defaultValue={`${ing.quantity ?? ''} ${ing.unit ?? ''} ${ing.name}`.trim()}
+                  autoFocus
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onBlur={(e) => handleUpdate(index, e.target.value)}
+                />
+              ) : (
+                <div
+                  onClick={() => setEditingIndex(index)}
+                  className="flex-1 cursor-pointer text-sm"
+                >
+                  {formatIngredient(ing)}
+                </div>
+              )}
               <Button
-                type="button"
                 variant="ghost"
                 size="icon"
-                onClick={() => handleRemoveIngredient(index)}
+                className="ml-2"
+                type="button"
+                onClick={() => handleRemove(index)}
               >
-                <Trash2 className="h-4 w-4 text-destructive" />
+                <Trash2 className="w-4 h-4 text-destructive" />
               </Button>
-            )}
-          </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
 
-      <Button type="button" variant="outline" onClick={handleAddIngredient}>
-        <Plus className="mr-2 h-4 w-4" />
-        Lägg till ingrediens
-      </Button>
+      <div>
+        <Input
+          placeholder="Skriv ingrediens, t.ex. 2 dl mjölk"
+          className="bg-muted"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <p className="text-sm text-muted-foreground mt-1">
+          Exempel: <i>2 dl mjölk</i>, <i>smör till stekning</i>. Tryck Enter för att lägga till.
+        </p>
+      </div>
     </div>
   )
 }
+
+export default IngredientInput
