@@ -9,7 +9,7 @@ interface PortionsInputProps {
 const PortionsInput: React.FC<PortionsInputProps> = ({ value, onChange }) => {
   return (
     <div>
-      <Label htmlFor="portions" className="block text-base font-semibold pb-1">
+      <Label htmlFor="portions" className="block text-lg font-semibold pb-2">
         Antal portioner
       </Label>
       <PortionAdjuster value={value} onChange={onChange} />
