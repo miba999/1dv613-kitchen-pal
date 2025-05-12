@@ -38,7 +38,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, label = 'Taggar', 
 
   return (
     <div className="space-y-3">
-      {label && <label className="text-base font-semibold mb-1 block">{label}</label>}
+      {label && <label className="text-lg font-semibold block">{label}</label>}
       <div className="flex gap-2">
         <Input
           className="bg-muted"
