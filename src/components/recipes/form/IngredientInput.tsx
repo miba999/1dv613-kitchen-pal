@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -13,6 +13,8 @@ interface IngredientInputProps {
 const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngredients }) => {
   const [draft, setDraft] = useState('')
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   // Regex to extract quantity + unit + name
   const parseIngredient = (raw: string): Ingredient => {
@@ -35,6 +37,11 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
 
     setIngredients([...ingredients, parsed])
     setDraft('')
+
+    // Auto-focus the input again
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
   }
 
   const handleUpdate = (index: number, value: string) => {
@@ -74,53 +81,67 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
   }
 
   return (
-    <div className="space-y-2">
-      <Label className="text-lg">Ingredienser</Label>
+    <div className="space-y-3">
+      <div>
+        <Label className="text-lg">Ingredienser</Label>
+        {ingredients.length > 0 && (
+          <p className="text-sm text-muted-foreground mt-1">
+            Klicka på en ingrediens för att redigera eller ta bort den.
+          </p>
+        )}
+      </div>
 
-      {ingredients.length > 0 && (
-        <div className="space-y-1">
-          {ingredients.map((ing, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between border-b py-1 px-1 hover:bg-muted/40 transition-colors"
-            >
-              {editingIndex === index ? (
-                <Input
-                  defaultValue={`${ing.quantity ?? ''} ${ing.unit ?? ''} ${ing.name}`.trim()}
-                  autoFocus
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                  onBlur={(e) => handleUpdate(index, e.target.value)}
-                />
-              ) : (
-                <div
-                  onClick={() => setEditingIndex(index)}
-                  className="flex-1 cursor-pointer text-sm"
-                >
-                  {formatIngredient(ing)}
-                </div>
-              )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="ml-2"
-                type="button"
-                onClick={() => handleRemove(index)}
+      <ul className="space-y-2">
+        {ingredients.map((ing, index) => (
+          <li
+            key={index}
+            className="group flex items-center justify-between border rounded-md px-3 py-1 hover:bg-muted/30 transition"
+          >
+            {editingIndex === index ? (
+              <Input
+                defaultValue={`${ing.quantity ?? ''} ${ing.unit ?? ''} ${ing.name}`.trim()}
+                autoFocus
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                onBlur={(e) => handleUpdate(index, e.target.value)}
+                className="flex-1 border-none shadow-none p-0 focus-visible:ring-0 text-sm"
+              />
+            ) : (
+              <span
+                onClick={() => setEditingIndex(index)}
+                className="cursor-pointer text-sm flex-1"
               >
-                <Trash2 className="w-4 h-4 text-destructive" />
-              </Button>
-            </div>
-          ))}
-        </div>
-      )}
+                {formatIngredient(ing)}
+              </span>
+            )}
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="opacity-0 group-hover:opacity-100 ml-2 transition-opacity"
+              type="button"
+              onClick={() => handleRemove(index)}
+            >
+              <Trash2 className="w-4 h-4 text-destructive" />
+            </Button>
+          </li>
+        ))}
+      </ul>
 
       <div>
-        <Input
-          placeholder="Skriv ingrediens, t.ex. 2 dl mjölk"
-          className="bg-muted"
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+        <div className="flex gap-2">
+          <Input
+            ref={inputRef}
+            placeholder="Skriv ingrediens, t.ex. 2 dl mjölk"
+            className="bg-muted flex-1"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <Button type="button" variant="outline" onClick={handleAdd}>
+            Lägg till
+          </Button>
+        </div>
+
         <p className="text-sm text-muted-foreground mt-1">
           Exempel: <i>2 dl mjölk</i>, <i>smör till stekning</i>. Tryck Enter för att lägga till.
         </p>
