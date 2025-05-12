@@ -9,7 +9,7 @@ interface TitleInputProps {
 const TitleInput: React.FC<TitleInputProps> = ({ value, onChange }) => {
   return (
     <div>
-      <Label htmlFor="title" className="text-base font-semibold pb-1">
+      <Label htmlFor="title" className="text-lg font-semibold pb-2">
         Titel
       </Label>
       <Input
