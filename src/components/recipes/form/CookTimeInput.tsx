@@ -9,7 +9,7 @@ interface CookTimeInputProps {
 const CookTimeInput: React.FC<CookTimeInputProps> = ({ value, onChange }) => {
   return (
     <div>
-      <Label htmlFor="cookTime" className="block text-base font-semibold pb-1">
+      <Label htmlFor="cookTime" className="block text-lg font-semibold pb-2">
         Tillagningstid (min)
       </Label>
       <Input
