@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Trash2 } from 'lucide-react'
 import { Ingredient } from '@/types/recipe'
+import { cn } from '@/lib/utils'
 
 interface IngredientInputProps {
   ingredients: Ingredient[]
@@ -95,15 +96,19 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
         {ingredients.map((ing, index) => (
           <li
             key={index}
-            className="group flex items-center justify-between border rounded-md px-3 py-1 hover:bg-muted/30 transition"
+            className={cn(
+              'group flex items-center justify-between border rounded-md px-3 py-1 transition',
+              editingIndex === index ? 'bg-muted ring-1 ring-ring shadow-sm' : 'hover:bg-muted/30'
+            )}
           >
             {editingIndex === index ? (
-              <Input
+              <input
                 defaultValue={`${ing.quantity ?? ''} ${ing.unit ?? ''} ${ing.name}`.trim()}
                 autoFocus
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onBlur={(e) => handleUpdate(index, e.target.value)}
-                className="flex-1 border-none shadow-none p-0 focus-visible:ring-0 text-sm"
+                className="flex-1 bg-transparent outline-none text-sm"
+                style={{ padding: 0 }}
               />
             ) : (
               <span
