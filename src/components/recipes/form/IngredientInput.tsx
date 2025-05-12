@@ -86,7 +86,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
         <Label className="text-lg">Ingredienser</Label>
         {ingredients.length > 0 && (
           <p className="text-sm text-muted-foreground mt-1">
-            Klicka på en ingrediens för att redigera eller ta bort den.
+            ✏️ Klicka för att redigera eller ta bort ingredienser.
           </p>
         )}
       </div>
