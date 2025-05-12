@@ -61,7 +61,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, label = 'Taggar', 
             {tag}
             <button
               type="button"
-              className="ml-2 text-gray-600 hover:text-red-600"
+              className="ml-2 text-muted-foreground hover:text-destructive"
               onClick={() => removeTag(idx)}
             >
               <X className="w-4 h-4" />
