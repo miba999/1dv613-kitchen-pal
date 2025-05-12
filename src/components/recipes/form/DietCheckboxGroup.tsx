@@ -27,7 +27,7 @@ const DietCheckboxGroup: React.FC<DietCheckboxGroupProps> = ({ selected, onChang
 
   return (
     <div className="space-y-2">
-      <Label className="text-base font-semibold">Kosthållning (valfritt)</Label>
+      <Label className="text-lg font-semibold pb-1">Kosthållning (valfritt)</Label>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {dietOptions.map(({ label, value, emoji }) => (
           <label
