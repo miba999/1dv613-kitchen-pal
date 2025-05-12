@@ -41,6 +41,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, label = 'Taggar', 
       {label && <label className="text-base font-semibold mb-1 block">{label}</label>}
       <div className="flex gap-2">
         <Input
+          className="bg-muted"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -53,7 +54,10 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, label = 'Taggar', 
 
       <div className="flex gap-2 flex-wrap">
         {tags.map((tag, idx) => (
-          <span key={idx} className="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+          <span
+            key={idx}
+            className="flex items-center bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm border"
+          >
             {tag}
             <button
               type="button"
