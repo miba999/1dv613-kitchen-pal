@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Ingredient } from '@/types/recipe'
 import { NewRecipe } from '@/types/newRecipe'
 import IngredientInput from '@/components/recipes/form/IngredientInput'
@@ -13,6 +11,7 @@ import PortionsInput from '@/components/recipes/form/PortionsInput'
 import TagsInput from '@/components/recipes/form/TagsInput'
 import ImageUpload from '@/components/recipes/form/ImageUpload'
 import LoadingSpinner from '@/components/ui/loading-spinner'
+import InstructionsInput from '@/components/recipes/form/InstructionsInput'
 
 interface RecipeFormProps {
   onSubmit: (data: NewRecipe, imageFile?: File) => void
@@ -30,14 +29,6 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
   const [imageFile, setImageFile] = useState<File | undefined>()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleAddStep = () => setSteps([...steps, ''])
-
-  const handleStepChange = (index: number, value: string) => {
-    const updated = [...steps]
-    updated[index] = value
-    setSteps(updated)
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -87,35 +78,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
 
       <IngredientInput ingredients={ingredients} setIngredients={setIngredients} />
 
-      {/* Steps */}
-      <div>
-        <Label>Gör så här</Label>
-        {steps.map((step, i) => (
-          <Textarea
-            key={i}
-            placeholder={`Steg ${i + 1}`}
-            value={step}
-            onChange={(e) => handleStepChange(i, e.target.value)}
-            className="mb-2"
-          />
-        ))}
-        <Button type="button" onClick={handleAddStep}>
-          Lägg till steg
-        </Button>
-      </div>
-
-      <div className="flex gap-4 mt-8">
-        <Button variant="outline">Lägg till recept</Button>
-        <Button type="button" variant="ghost">
-          Lägg till tagg
-        </Button>
-        <Button type="button" variant="outline">
-          Lägg till ingrediens
-        </Button>
-        <Button type="button" variant="destructive">
-          Ta bort ingrediens
-        </Button>
-      </div>
+      <InstructionsInput steps={steps} setSteps={setSteps} />
 
       <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
         {isSubmitting ? (
