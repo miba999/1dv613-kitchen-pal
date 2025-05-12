@@ -84,7 +84,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
   return (
     <div className="space-y-3">
       <div>
-        <Label className="text-lg">Ingredienser</Label>
+        <Label className="text-lg font-semibold">Ingredienser</Label>
         {ingredients.length > 0 && (
           <p className="text-sm text-muted-foreground mt-1">
             ✏️ Klicka för att redigera eller ta bort ingredienser.
