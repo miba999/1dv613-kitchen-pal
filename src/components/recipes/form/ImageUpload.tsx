@@ -45,7 +45,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ imageFile, setImageFile, maxS
 
   return (
     <div className="space-y-2">
-      <Label className="text-base font-semibold pb-1 block">Bild (valfritt)</Label>
+      <Label className="text-lg font-semibold block">Bild (valfritt)</Label>
 
       {!imageFile && (
         <div
