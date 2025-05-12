@@ -1,0 +1,22 @@
+stages:
+  - lint
+  - deploy
+
+lint:
+  image: node:18
+  stage: lint
+  script:
+    - npm ci
+    - npm run lint
+  only:
+    - main
+
+deploy:
+  image: node:18
+  stage: deploy
+  script:
+    - npm ci
+    - npm install -g firebase-tools
+    - firebase deploy --token "$FIREBASE_DEPLOY_TOKEN"
+  only:
+    - main
