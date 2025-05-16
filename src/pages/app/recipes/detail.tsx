@@ -1,11 +1,18 @@
 import * as React from 'react'
 import RecipeDetail from '@/components/recipes/RecipeDetail'
+import BackButton from '@/components/recipes/form/BackButton'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IRecipeDetailPageProps {}
-
-const RecipeDetailPage: React.FunctionComponent<IRecipeDetailPageProps> = () => {
-  return <RecipeDetail />
+const RecipeDetailPage: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-muted py-6 px-4">
+      <div className="max-w-3xl mx-auto">
+        <div className="rounded-lg border bg-card shadow-md p-6 relative">
+          <BackButton to="/recipes" label="Tillbaka till alla recept" />
+          <RecipeDetail />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default RecipeDetailPage
