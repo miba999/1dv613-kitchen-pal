@@ -24,8 +24,8 @@ const RecipeNew: React.FC = () => {
     <div className="min-h-screen bg-muted py-6 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="rounded-lg border bg-card shadow-md p-6 relative">
-        <BackButton />
-          <RecipeForm onSubmit={handleCreate} />
+          <BackButton label="Avbryt" />
+          <RecipeForm onSubmit={handleCreate} mode="create" />
         </div>
       </div>
     </div>
