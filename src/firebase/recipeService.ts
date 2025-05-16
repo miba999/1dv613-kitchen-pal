@@ -1,4 +1,12 @@
-import { collection, getDocs, getDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore'
 import { query, where } from 'firebase/firestore'
 import { db } from './firebaseConfig'
 import { Recipe } from '@/types/recipe'
@@ -68,4 +76,38 @@ export const addRecipe = async (data: NewRecipe, imageFile?: File): Promise<stri
   return docRef.id
 }
 
-// ... (update, delete, etc.)
+// UPDATE a recipe
+export const updateRecipe = async (
+  id: string,
+  updatedData: NewRecipe,
+  newImageFile?: File
+): Promise<void> => {
+  const user = auth.currentUser
+
+  if (!user) throw new Error('User not authenticated')
+
+  let imageUrl = updatedData.imageUrl // Keep old image unless a new one is provided
+
+  if (newImageFile) {
+    imageUrl = await uploadRecipeImage(newImageFile, user.uid)
+
+    if (!imageUrl) {
+      throw new Error('Failed to upload image')
+    }
+  }
+
+  const updatedRecipe = {
+    ...updatedData,
+    imageUrl,
+    updatedAt: serverTimestamp(),
+  }
+
+  // Remove undefined properties
+  const cleanedData = Object.fromEntries(
+    Object.entries(updatedRecipe).filter(([, value]) => value !== undefined)
+  )
+
+  await updateDoc(doc(recipesRef, id), cleanedData)
+}
+
+// ... (delete, etc.)
