@@ -15,18 +15,20 @@ import InstructionsInput from '@/components/recipes/form/InstructionsInput'
 
 interface RecipeFormProps {
   onSubmit: (data: NewRecipe, imageFile?: File) => void
+  initialData?: NewRecipe
+  mode?: 'create' | 'edit'
 }
 
-const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [portions, setPortions] = useState(4)
-  const [cookTime, setCookTime] = useState(30)
-  const [diets, setDiets] = useState<string[]>([])
-  const [tags, setTags] = useState<string[]>([])
-  const [steps, setSteps] = useState([''])
-  const [ingredients, setIngredients] = useState<Ingredient[]>([])
-  const [imageFile, setImageFile] = useState<File | undefined>()
+const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit, initialData, mode = 'create' }) => {
+  const [title, setTitle] = useState(initialData?.title ?? '')
+  const [description, setDescription] = useState(initialData?.description ?? '')
+  const [portions, setPortions] = useState(initialData?.portions ?? 4)
+  const [cookTime, setCookTime] = useState(initialData?.cookTime ?? 30)
+  const [diets, setDiets] = useState<string[]>(initialData?.diets ?? [])
+  const [tags, setTags] = useState<string[]>(initialData?.tags ?? [])
+  const [steps, setSteps] = useState<string[]>(initialData?.steps ?? [''])
+  const [ingredients, setIngredients] = useState<Ingredient[]>(initialData?.ingredients ?? [])
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -49,7 +51,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
         steps,
       }
 
-      await onSubmit(recipe, imageFile)
+      onSubmit(recipe, imageFile)
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
@@ -59,7 +61,9 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto pt-8 px-4">
-      <h1 className="text-2xl font-bold">Skapa nytt recept</h1>
+      <h1 className="text-2xl font-bold">
+        {mode === 'edit' ? 'Redigera recept' : 'Skapa nytt recept'}
+      </h1>
 
       <TitleInput value={title} onChange={setTitle} />
 
@@ -83,8 +87,11 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit }) => {
       <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
         {isSubmitting ? (
           <div className="flex items-center gap-2">
-            <LoadingSpinner size={16} /> Sparar...
+            <LoadingSpinner size={16} />
+            {mode === 'edit' ? 'Sparar ändringar...' : 'Sparar...'}
           </div>
+        ) : mode === 'edit' ? (
+          'Spara ändringar'
         ) : (
           'Spara recept'
         )}
