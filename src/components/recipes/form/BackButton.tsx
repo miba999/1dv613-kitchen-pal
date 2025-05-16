@@ -4,13 +4,25 @@ import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface BackButtonProps {
-  to?: string
+  to?: string // Where to go (optional)
+  label?: string // Optional label for tooltip
+  className?: string // Optional style override
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ to = '/recipes' }) => {
+const BackButton: React.FC<BackButtonProps> = ({
+  to,
+  label = 'Gå tillbaka',
+  className = 'absolute top-4 left-4',
+}) => {
   const navigate = useNavigate()
 
-  const handleClick = () => navigate(to)
+  const handleClick = () => {
+    if (to) {
+      navigate(to)
+    } else {
+      navigate(-1) // Go back to the previous page
+    }
+  }
 
   return (
     <TooltipProvider>
@@ -20,13 +32,13 @@ const BackButton: React.FC<BackButtonProps> = ({ to = '/recipes' }) => {
             onClick={handleClick}
             variant="ghost"
             size="icon"
-            className="absolute top-4 left-4"
-            aria-label="Tillbaka till recepten"
+            className={className}
+            aria-label={label}
           >
             <ArrowLeft className="w-6 h-6" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Gå tillbaka till recepten</TooltipContent>
+        <TooltipContent>{label}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   )
