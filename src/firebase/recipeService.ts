@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   getDoc,
@@ -13,6 +14,7 @@ import { Recipe } from '@/types/recipe'
 import { auth } from './firebaseConfig'
 import { NewRecipe } from '@/types/newRecipe'
 import { uploadRecipeImage } from './storageService'
+import { deleteRecipeImage } from './storageService'
 
 const recipesRef = collection(db, 'recipes')
 
@@ -110,4 +112,16 @@ export const updateRecipe = async (
   await updateDoc(doc(recipesRef, id), cleanedData)
 }
 
-// ... (delete, etc.)
+// DELETE a recipe
+export const deleteRecipe = async (id: string, imageUrl?: string): Promise<void> => {
+  const user = auth.currentUser
+
+  if (!user) throw new Error('User not authenticated')
+
+  // Delete the image from storage if it exists
+  if (imageUrl) {
+    await deleteRecipeImage(imageUrl, user.uid)
+  }
+
+  await deleteDoc(doc(recipesRef, id))
+}
