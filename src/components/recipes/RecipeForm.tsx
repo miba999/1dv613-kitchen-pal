@@ -1,5 +1,16 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog'
 import { Ingredient } from '@/types/recipe'
 import { NewRecipe } from '@/types/newRecipe'
 import IngredientInput from '@/components/recipes/form/IngredientInput'
@@ -15,11 +26,17 @@ import InstructionsInput from '@/components/recipes/form/InstructionsInput'
 
 interface RecipeFormProps {
   onSubmit: (data: NewRecipe, imageFile?: File) => void
+  onDelete?: () => void
   initialData?: NewRecipe
   mode?: 'create' | 'edit'
 }
 
-const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit, initialData, mode = 'create' }) => {
+const RecipeForm: React.FC<RecipeFormProps> = ({
+  onSubmit,
+  onDelete,
+  initialData,
+  mode = 'create',
+}) => {
   const [title, setTitle] = useState(initialData?.title ?? '')
   const [description, setDescription] = useState(initialData?.description ?? '')
   const [portions, setPortions] = useState(initialData?.portions ?? 4)
@@ -83,19 +100,42 @@ const RecipeForm: React.FC<RecipeFormProps> = ({ onSubmit, initialData, mode = '
       <IngredientInput ingredients={ingredients} setIngredients={setIngredients} />
 
       <InstructionsInput steps={steps} setSteps={setSteps} />
+      <div className="flex gap-4">
+        <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
+          {isSubmitting ? (
+            <div className="flex items-center gap-2">
+              <LoadingSpinner size={16} />
+              {mode === 'edit' ? 'Sparar ändringar...' : 'Sparar...'}
+            </div>
+          ) : mode === 'edit' ? (
+            'Spara ändringar'
+          ) : (
+            'Spara recept'
+          )}
+        </Button>
 
-      <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
-        {isSubmitting ? (
-          <div className="flex items-center gap-2">
-            <LoadingSpinner size={16} />
-            {mode === 'edit' ? 'Sparar ändringar...' : 'Sparar...'}
-          </div>
-        ) : mode === 'edit' ? (
-          'Spara ändringar'
-        ) : (
-          'Spara recept'
+        {mode === 'edit' && onDelete && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button" variant="destructive" className="min-w-[140px]">
+                Ta bort recept
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Radera receptet "{title}"?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Detta kommer att permanent ta bort receptet. Det går inte att ångra.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel autoFocus>Avbryt</AlertDialogCancel>
+                <AlertDialogAction onClick={onDelete}>Radera</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         )}
-      </Button>
+      </div>
     </form>
   )
 }
