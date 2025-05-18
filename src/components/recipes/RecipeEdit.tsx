@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { NewRecipe } from '@/types/newRecipe'
-
 import RecipeForm from '@/components/recipes/RecipeForm'
 import { toast } from 'sonner'
 import { getRecipeById } from '@/firebase/recipeService'
 import LoadingSpinner from '@/components/ui/loading-spinner'
-import { updateRecipe } from '@/firebase/recipeService'
+import { updateRecipe, deleteRecipe } from '@/firebase/recipeService'
 
 const RecipeEdit: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -58,6 +57,24 @@ const RecipeEdit: React.FC = () => {
     }
   }
 
+  const handleDelete = async () => {
+    if (!id) {
+      console.error('Missing recipe ID')
+      toast.error('Det gick inte att radera receptet.')
+
+      return
+    }
+
+    try {
+      await deleteRecipe(id, recipeData?.imageUrl)
+      toast.success('Recept raderat')
+      navigate('/recipes')
+    } catch (error) {
+      console.error('Delete failed:', error)
+      toast.error('Misslyckades att ta bort receptet')
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -74,7 +91,14 @@ const RecipeEdit: React.FC = () => {
     )
   }
 
-  return <RecipeForm mode="edit" initialData={recipeData} onSubmit={handleUpdate} />
+  return (
+    <RecipeForm
+      mode="edit"
+      initialData={recipeData}
+      onSubmit={handleUpdate}
+      onDelete={handleDelete}
+    />
+  )
 }
 
 export default RecipeEdit
