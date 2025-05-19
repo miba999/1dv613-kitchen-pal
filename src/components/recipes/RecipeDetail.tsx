@@ -24,24 +24,6 @@ const RecipeDetail: React.FC = () => {
     )
   }
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-screen">
-  //       <LoadingSpinner size={40} />
-  //     </div>
-  //   )
-  // }
-  
-  // if (!recipe) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center h-screen text-center px-4">
-  //       <h2 className="text-2xl font-bold mb-2">Receptet hittades inte</h2>
-  //       <p className="text-muted-foreground mb-4">Det verkar som att receptet du försöker nå inte finns eller har tagits bort.</p>
-  //       <a href="/recipes" className="text-blue-600 underline">Tillbaka till mina recept</a>
-  //     </div>
-  //   )
-  // }
-
   if (!recipe) {
     return (
       <div className="flex justify-center items-center h-screen">
