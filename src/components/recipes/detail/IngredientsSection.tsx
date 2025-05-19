@@ -32,12 +32,22 @@ const IngredientsSection: React.FC<IngredientsSectionProps> = ({
         </div>
 
         <ul className="list-disc list-inside space-y-1">
-          {ingredients.map((ing, index) => (
-            <li key={index}>
-              {formatQuantity(ing.quantity * scale)} {ing.unit} {ing.name}
-              {ing.note && <span className="text-muted-foreground"> ({ing.note})</span>}
-            </li>
-          ))}
+          {ingredients.map((ing, index) => {
+            const hasQuantity = typeof ing.quantity === 'number' && !isNaN(ing.quantity)
+            const adjustedQty = hasQuantity ? formatQuantity(ing.quantity as number * scale) : null
+
+            return (
+              <li key={index}>
+                {adjustedQty && (
+                  <strong>
+                    {adjustedQty} {ing.unit}{' '}
+                  </strong>
+                )}
+                {ing.name}
+                {ing.note && <span className="text-muted-foreground"> ({ing.note})</span>}
+              </li>
+            )
+          })}
         </ul>
       </section>
     </Card>
