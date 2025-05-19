@@ -20,6 +20,15 @@ const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
     return <div className="text-center text-red-500 mt-8">Något gick fel: {error.message}</div>
   }
 
+  if (recipes.length === 0) {
+    return (
+      <div className="text-center mt-12">
+        <h2 className="text-xl font-semibold mb-2">Du har inga sparade recept ännu</h2>
+        <p className="text-muted-foreground">Skapa ett nytt recept för att komma igång!</p>
+      </div>
+    )
+  }
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-6">Mina recept</h1>

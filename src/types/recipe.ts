@@ -1,6 +1,6 @@
 export interface Ingredient {
   name: string
-  quantity: number
+  quantity?: number
   unit?: string
   note?: string
 }
@@ -11,7 +11,7 @@ export interface Recipe {
   description: string
   portions: number
   cookTime: number // in minutes
-  diet?: string // e.g. "vegetarisk", "vegan"
+  diets?: string[] // e.g. "vegetarisk", "vegan"
   ingredients: Ingredient[]
   steps: string[]
   tags?: string[]

@@ -1,16 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addRecipe } from '@/firebase/recipeService'
-import RecipeForm from '@/components/recipes/form/RecipeForm'
+import RecipeForm from '@/components/recipes/RecipeForm'
 import { NewRecipe } from '@/types/newRecipe'
 import { toast } from 'sonner'
+import BackButton from '@/components/recipes/form/BackButton'
 
 const RecipeNew: React.FC = () => {
   const navigate = useNavigate()
 
-  const handleCreate = async (data: NewRecipe) => {
+  const handleCreate = async (data: NewRecipe, imageFile?: File) => {
     try {
-      const id = await addRecipe(data)
+      const id = await addRecipe(data, imageFile)
       toast.success('Receptet har sparats!')
       navigate(`/recipes/${id}`)
     } catch (error) {
@@ -20,12 +21,11 @@ const RecipeNew: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-10 px-4">
+    <div className="min-h-screen bg-muted py-6 px-4">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Skapa nytt recept</h1>
-
-        <div className="rounded-lg border bg-card shadow-md p-6">
-          <RecipeForm onSubmit={handleCreate} />
+        <div className="rounded-lg border bg-card shadow-md p-6 relative">
+          <BackButton label="Avbryt" />
+          <RecipeForm onSubmit={handleCreate} mode="create" />
         </div>
       </div>
     </div>
