@@ -19,7 +19,7 @@ import RecipeEdit from '@/pages/app/recipes/edit'
 
 import Dashboard from '@/pages/app/dashboard'
 import Profile from '@/pages/app/profile'
-import ShoppingListPage from './pages/app/shopping-list.tsx'
+import ShoppingListPage from './pages/app/shopping-list/index.tsx'
 
 export const router = createBrowserRouter([
   {
