@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Clock } from 'lucide-react'
 import { List } from 'lucide-react'
@@ -24,11 +18,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
     <Card className="w-full max-w-xs hover:shadow-md transition-shadow overflow-hidden">
       <Link to={`/recipes/${recipe.id}`}>
         <div className="p-4 pt-0">
-          <img
-            src={imageUrl}
-            alt={recipe.title}
-            className="object-cover rounded-md w-full h-50"
-          />
+          <img src={imageUrl} alt={recipe.title} className="object-cover rounded-md w-full h-50" />
         </div>
 
         <CardHeader>
@@ -36,15 +26,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         </CardHeader>
 
         <CardContent className="space-y-3">
-          {recipe.description && (
-            <p
-              className="text-sm text-muted-foreground line-clamp-3"
-              title={recipe.description}
-            >
-              {recipe.description}
-            </p>
-          )}
-
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
