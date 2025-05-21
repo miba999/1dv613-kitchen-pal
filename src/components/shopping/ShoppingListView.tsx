@@ -17,7 +17,12 @@ export default function ShoppingListView() {
   return (
     <ul className="space-y-3">
       {[...items]
-        .sort((a, b) => Number(a.checked) - Number(b.checked))
+        .sort((a, b) => {
+          const aChecked = !!a.checked
+          const bChecked = !!b.checked
+
+          return Number(aChecked) - Number(bChecked)
+        })
         .map((item) => {
           const index = items.findIndex((i) => i === item)
           
