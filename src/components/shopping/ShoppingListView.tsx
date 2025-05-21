@@ -15,6 +15,10 @@ export default function ShoppingListView() {
     return <p className="text-gray-500">Your shopping list is empty.</p>
   }
 
+  if (!user?.uid) {
+    return <p className="text-gray-500">Logga in för att hantera din inköpslista.</p>
+  }
+
   return (
     <ul className="space-y-3">
       {items.map((item, index) => (
@@ -24,18 +28,17 @@ export default function ShoppingListView() {
         >
           <label className="flex items-center gap-3 flex-1 cursor-pointer">
             <Checkbox
-              checked={!!item.checked} // ✅ force boolean (false if undefined)
-              onCheckedChange={() => toggleChecked(index)}
+              checked={!!item.checked}
+              onCheckedChange={() => toggleChecked(index, user.uid)}
             />
             <span className={item.checked ? 'line-through text-gray-400' : ''}>
-              {item.quantity ?? ''} {item.unit ?? ''} {item.name}
+              {typeof item.quantity === 'number' && item.quantity > 0
+                ? `${item.quantity} ${item.unit ?? ''} `
+                : ''}
+              {item.name}
             </span>
           </label>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => user?.uid && removeItem(index, user.uid)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => removeItem(index, user.uid)}>
             <Trash2 className="w-4 h-4 text-red-500" />
           </Button>
         </li>
