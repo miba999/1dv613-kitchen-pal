@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Trash2 } from 'lucide-react'
 import { Ingredient } from '@/types/recipe'
 import { cn } from '@/lib/utils'
+import { parseIngredient, formatIngredientParts } from '@/lib/ingredientParser'
 
 interface IngredientInputProps {
   ingredients: Ingredient[]
@@ -16,20 +17,6 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
 
   const inputRef = useRef<HTMLInputElement>(null)
-
-  // Regex to extract quantity + unit + name
-  const parseIngredient = (raw: string): Ingredient => {
-    const pattern = /^(\d+(?:[.,]\d+)?)\s*(\w+)?\s+(.+)$/i
-    const match = raw.trim().match(pattern)
-
-    if (!match) return { name: raw.trim() }
-
-    return {
-      quantity: parseFloat(match[1].replace(',', '.')),
-      unit: match[2] || '',
-      name: match[3],
-    }
-  }
 
   const handleAdd = () => {
     if (!draft.trim()) return
@@ -69,18 +56,6 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
     setIngredients(updated)
   }
 
-  const formatIngredient = (ing: Ingredient) => {
-    const qty = ing.quantity ? `${ing.quantity}${ing.unit ? ' ' + ing.unit : ''}` : ''
-
-    return (
-      <>
-        {qty && <strong>{qty}</strong>}
-        {qty && ' '}
-        {ing.name}
-      </>
-    )
-  }
-
   return (
     <div className="space-y-3">
       <div>
@@ -115,7 +90,17 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
                 onClick={() => setEditingIndex(index)}
                 className="cursor-pointer text-sm flex-1"
               >
-                {formatIngredient(ing)}
+                {(() => {
+                  const { qty, unit, name } = formatIngredientParts(ing)
+                  
+                  return (
+                    <>
+                      {qty && <strong>{qty}</strong>}
+                      {unit && <strong>{' ' + unit}</strong>}
+                      {name && ' ' + name}
+                    </>
+                  )
+                })()}
               </span>
             )}
 
