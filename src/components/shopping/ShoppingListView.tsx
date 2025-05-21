@@ -12,7 +12,7 @@ export default function ShoppingListView() {
   const removeItem = useShoppingListStore((state) => state.removeItem)
 
   if (!items.length) {
-    return <p className="text-gray-500">Your shopping list is empty.</p>
+    return <p className="text-gray-500">Din inköpslista är tom</p>
   }
 
   if (!user?.uid) {
