@@ -30,7 +30,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
     <>
       <Link to={`/recipes/${recipe.id}`} className="block w-full max-w-xs">
-        <Card className="hover:shadow-md transition-shadow overflow-hidden relative group cursor-pointer gap-2">
+        <Card className="hover:shadow-md transition-shadow overflow-hidden relative group cursor-pointer gap-3">
           <div className="px-6 pb-0 pt-0">
             <img
               src={imageUrl}
@@ -88,6 +88,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           open={modalOpen}
           onClose={() => setModalOpen(false)}
           ingredients={recipe.ingredients}
+          portions={recipe.portions}
         />
       )}
     </>
