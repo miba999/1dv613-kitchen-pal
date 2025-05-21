@@ -54,10 +54,12 @@ const ShoppingListItemRow: React.FC<Props> = ({ item, index }) => {
         item.checked && 'opacity-60'
       )}
     >
+      {/* Checkbox */}
       <div className="mr-3 mt-0.5">
         <Checkbox checked={!!item.checked} onCheckedChange={() => toggleChecked(index, uid)} />
       </div>
 
+      {/* Inline editing or static display */}
       {editing && !item.checked ? (
         <input
           autoFocus
@@ -88,6 +90,7 @@ const ShoppingListItemRow: React.FC<Props> = ({ item, index }) => {
         </span>
       )}
 
+      {/* Delete button */}
       <Button
         variant="ghost"
         size="icon"
