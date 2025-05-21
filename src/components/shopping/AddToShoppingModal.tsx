@@ -1,14 +1,16 @@
-// src/components/shopping/AddToShoppingModal.tsx
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ShoppingListItem } from '@/types/shoppingList'
 import { useShoppingListStore } from '@/store/useShoppingListStore'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useAuthUser } from '@/hooks/useAuthUser'
@@ -17,9 +19,15 @@ interface AddToShoppingModalProps {
   open: boolean
   onClose: () => void
   ingredients: ShoppingListItem[] // from selected recipe
+  portions: number
 }
 
-export const AddToShoppingModal = ({ open, onClose, ingredients }: AddToShoppingModalProps) => {
+export const AddToShoppingModal = ({
+  open,
+  onClose,
+  ingredients,
+  portions,
+}: AddToShoppingModalProps) => {
   const [selected, setSelected] = useState<boolean[]>(ingredients.map(() => true))
   const { user } = useAuthUser()
   const addItems = useShoppingListStore((state) => state.addItems)
@@ -30,11 +38,23 @@ export const AddToShoppingModal = ({ open, onClose, ingredients }: AddToShopping
     setSelected(updated)
   }
 
+  const navigate = useNavigate()
+
   const handleAdd = async () => {
     const itemsToAdd = ingredients.filter((_, i) => selected[i])
 
-    if (user?.uid) {
+    if (user?.uid && itemsToAdd.length > 0) {
       await addItems(itemsToAdd, user.uid)
+
+      toast.success('Ingredienser tillagda', {
+        description: `${itemsToAdd.length} ingrediens${itemsToAdd.length > 1 ? 'er' : ''} har lagts till i din inköpslista.`,
+        action: {
+          label: 'Visa lista',
+          onClick: () => navigate('/shopping-list'),
+        },
+        duration: 5000,
+        icon: '🛒',
+      })
     }
 
     onClose()
@@ -44,7 +64,8 @@ export const AddToShoppingModal = ({ open, onClose, ingredients }: AddToShopping
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Ingredients to Shopping List</DialogTitle>
+          <DialogTitle>Lägg till ingredienser</DialogTitle>
+          <DialogDescription>För {portions} portioner.</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -60,9 +81,9 @@ export const AddToShoppingModal = ({ open, onClose, ingredients }: AddToShopping
 
         <DialogFooter className="pt-4">
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            Avbryt
           </Button>
-          <Button onClick={handleAdd}>Add Selected</Button>
+          <Button onClick={handleAdd}>Lägg till valda</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
