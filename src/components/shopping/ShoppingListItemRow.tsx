@@ -94,7 +94,7 @@ const ShoppingListItemRow: React.FC<Props> = ({ item, index }) => {
       <Button
         variant="ghost"
         size="icon"
-        className="opacity-0 group-hover:opacity-100 ml-2 transition-opacity"
+        className="ml-2 transition-opacity opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
         type="button"
         onClick={() => removeItem(index, uid)}
       >
