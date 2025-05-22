@@ -47,7 +47,12 @@ export const AddToShoppingModal = ({
       await addItems(itemsToAdd, user.uid)
 
       toast.success('Ingredienser tillagda', {
-        description: `${itemsToAdd.length} ingrediens${itemsToAdd.length > 1 ? 'er' : ''} har lagts till i din inköpslista.`,
+        description: (
+          <span className="text-muted-foreground text-sm">
+            {itemsToAdd.length} ingrediens{itemsToAdd.length > 1 ? 'er' : ''} har lagts till i din
+            inköpslista.
+          </span>
+        ),
         action: {
           label: 'Visa lista',
           onClick: () => navigate('/shopping-list'),
