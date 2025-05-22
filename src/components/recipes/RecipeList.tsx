@@ -1,12 +1,12 @@
+import { useState } from 'react'
 import RecipeCard from '@/components/recipes/RecipeCard'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 import { useRecipes } from '@/hooks/useRecipes'
+import SearchBar from '@/components/recipes/SearchBar'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IRecipeListProps {}
-
-const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
+const RecipeList: React.FC = () => {
   const { recipes, loading, error } = useRecipes()
+  const [search, setSearch] = useState('')
 
   if (loading) {
     return (
@@ -31,8 +31,13 @@ const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-6">Mina recept</h1>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+      <h1 className="text-2xl font-bold mb-4">Mina recept</h1>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Sök efter recept, ingrediens eller tagg..."
+      />
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
         {recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
