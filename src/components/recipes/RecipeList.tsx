@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RecipeCard from '@/components/recipes/RecipeCard'
 import LoadingSpinner from '@/components/ui/loading-spinner'
 import { useRecipes } from '@/hooks/useRecipes'
@@ -7,6 +7,16 @@ import SearchBar from '@/components/recipes/SearchBar'
 const RecipeList: React.FC = () => {
   const { recipes, loading, error } = useRecipes()
   const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState(search)
+
+  // ⏱ Debounce logic: update debouncedSearch after user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [search])
 
   if (loading) {
     return (
@@ -29,19 +39,34 @@ const RecipeList: React.FC = () => {
     )
   }
 
+  const query = debouncedSearch.toLowerCase()
+
+  const filteredRecipes = recipes.filter(
+    (recipe) =>
+      recipe.title.toLowerCase().includes(query) ||
+      recipe.ingredients?.some((ing) => ing.name.toLowerCase().includes(query)) ||
+      recipe.tags?.some((tag) => tag.toLowerCase().includes(query))
+  )
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Mina recept</h1>
+
       <SearchBar
         value={search}
         onChange={setSearch}
         placeholder="Sök efter recept, ingrediens eller tagg..."
       />
-      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
-      </div>
+
+      {filteredRecipes.length === 0 ? (
+        <p className="text-center text-muted-foreground mt-8">Inga recept matchade din sökning.</p>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          {filteredRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
