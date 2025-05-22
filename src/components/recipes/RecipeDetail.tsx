@@ -54,7 +54,7 @@ const RecipeDetail: React.FC = () => {
   }))
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-8 space-y-6">
+    <div className="max-w-3xl mx-auto px-8 py-6 space-y-4">
       {/* Edit Button */}
       <div className="flex justify-end">
         <Link to={`/recipes/${recipe.id}/edit`}>
