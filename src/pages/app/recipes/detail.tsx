@@ -6,7 +6,7 @@ const RecipeDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-muted py-6 px-4">
       <div className="max-w-3xl mx-auto">
-        <div className="rounded-lg border bg-card shadow-md p-6 relative">
+        <div className="rounded-lg border bg-card shadow-md px-6 relative">
           <BackButton to="/recipes" label="Tillbaka till alla recept" />
           <RecipeDetail />
         </div>
