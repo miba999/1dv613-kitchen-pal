@@ -1,0 +1,11 @@
+[
+  {
+    "origin": [
+      "http://localhost:3000",
+      "https://kitchen-pal-c0b19.web.app"
+    ],
+    "method": ["GET", "POST", "PUT", "OPTIONS"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]
