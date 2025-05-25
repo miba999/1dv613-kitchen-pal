@@ -4,9 +4,10 @@ import { Input } from '@/components/ui/input'
 interface TitleInputProps {
   value: string
   onChange: (value: string) => void
+  error?: string
 }
 
-const TitleInput: React.FC<TitleInputProps> = ({ value, onChange }) => {
+const TitleInput: React.FC<TitleInputProps> = ({ value, onChange, error }) => {
   return (
     <div>
       <Label htmlFor="title" className="text-lg font-semibold pb-2">
@@ -16,10 +17,10 @@ const TitleInput: React.FC<TitleInputProps> = ({ value, onChange }) => {
         id="title"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        required
         placeholder="Ge ditt recept ett namn"
-        className="text-lg bg-muted rounded-md mb-4"
+        className={`text-[22px] bg-muted rounded-md mb-2 ${error ? 'border border-destructive' : ''}`}
       />
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   )
 }
