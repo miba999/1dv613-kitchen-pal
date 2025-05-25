@@ -65,6 +65,12 @@ const RecipeEdit: React.FC = () => {
       return
     }
 
+    if (!navigator.onLine) {
+      toast.error('Du är offline – kontrollera din internetanslutning.')
+
+      return
+    }
+
     try {
       await deleteRecipe(id, recipeData?.imageUrl)
       toast.success('Recept raderat')
