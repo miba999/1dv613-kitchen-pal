@@ -49,10 +49,28 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const [errors, setErrors] = useState<{ title?: string; description?: string }>({})
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (isSubmitting) return // Prevent double submission
+
     if (isSubmitting) return
+
+    const newErrors: typeof errors = {}
+
+    if (!title.trim()) newErrors.title = 'Titel krävs'
+
+    if (!description.trim()) newErrors.description = 'Beskrivning krävs'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+
+      return
+    }
+
+    setErrors({})
 
     setIsSubmitting(true)
 
@@ -68,7 +86,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
         steps,
       }
 
-      onSubmit(recipe, imageFile)
+      await onSubmit(recipe, imageFile)
     } catch (error) {
       console.error('Error submitting form:', error)
     } finally {
@@ -82,9 +100,25 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
         {mode === 'edit' ? 'Redigera recept' : 'Skapa nytt recept'}
       </h1>
 
-      <TitleInput value={title} onChange={setTitle} />
+      <TitleInput
+        value={title}
+        onChange={(val) => {
+          setTitle(val)
 
-      <DescriptionInput value={description} onChange={setDescription} />
+          if (errors.title) setErrors((e) => ({ ...e, title: undefined }))
+        }}
+        error={errors.title}
+      />
+
+      <DescriptionInput
+        value={description}
+        onChange={(val) => {
+          setDescription(val)
+
+          if (errors.description) setErrors((e) => ({ ...e, description: undefined }))
+        }}
+        error={errors.description}
+      />
 
       <div className="grid gap-4 md:grid-cols-2">
         <PortionsInput value={portions} onChange={setPortions} />
@@ -100,6 +134,13 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
       <IngredientInput ingredients={ingredients} setIngredients={setIngredients} />
 
       <InstructionsInput steps={steps} setSteps={setSteps} />
+
+      {Object.keys(errors).length > 0 && (
+        <p className="text-sm text-destructive">
+          Vänligen fyll i de obligatoriska fälten innan du sparar receptet.
+        </p>
+      )}
+
       <div className="flex gap-4">
         <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
           {isSubmitting ? (
