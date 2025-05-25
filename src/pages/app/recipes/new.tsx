@@ -9,7 +9,7 @@ import BackButton from '@/components/recipes/form/BackButton'
 const RecipeNew: React.FC = () => {
   const navigate = useNavigate()
 
-  const handleCreate = async (data: NewRecipe, imageFile?: File) => {
+  const handleCreate = async (data: NewRecipe, imageFile?: File): Promise<void> => {
     try {
       const id = await addRecipe(data, imageFile)
       toast.success('Receptet har sparats!')
