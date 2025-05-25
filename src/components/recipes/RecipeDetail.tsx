@@ -1,5 +1,5 @@
 import { useParams, Navigate, Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Pencil } from 'lucide-react'
 
 import { useRecipe } from '@/hooks/useRecipe'
@@ -20,8 +20,13 @@ const RecipeDetail: React.FC = () => {
   const { recipe, loading } = useRecipe(id)
   const [modalOpen, setModalOpen] = useState(false)
 
-  // Default to 4 if recipe hasn't loaded yet
-  const [portions, setPortions] = useState(recipe?.portions || 4)
+  const [portions, setPortions] = useState<number | undefined>()
+
+  useEffect(() => {
+    if (recipe && recipe.portions) {
+      setPortions(recipe.portions)
+    }
+  }, [recipe])
 
   if (loading) {
     return (
@@ -43,7 +48,7 @@ const RecipeDetail: React.FC = () => {
     return <Navigate to="/not-found" />
   }
 
-  const scale = portions / recipe.portions
+  const scale = portions && recipe.portions ? portions / recipe.portions : 1
 
   const scaledIngredients = recipe.ingredients.map((ing) => ({
     ...ing,
@@ -84,7 +89,7 @@ const RecipeDetail: React.FC = () => {
       <IngredientsSection
         ingredients={recipe.ingredients}
         originalPortions={recipe.portions}
-        currentPortions={portions}
+        currentPortions={portions || recipe.portions}
         setCurrentPortions={setPortions}
         onAddToShoppingList={() => setModalOpen(true)}
       />
@@ -105,7 +110,7 @@ const RecipeDetail: React.FC = () => {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         ingredients={scaledIngredients}
-        portions={portions}
+        portions={portions || recipe.portions}
       />
     </div>
   )
