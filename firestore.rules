@@ -1,6 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Match each user's shopping list
+    match /shoppingLists/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
     match /recipes/{recipeId} {
       allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.createdBy;
       allow create: if request.auth != null;

@@ -7,7 +7,10 @@ interface PortionAdjusterProps {
 }
 
 const PortionAdjuster: React.FC<PortionAdjusterProps> = ({ value, onChange }) => {
-  const decrease = () => value > 2 && onChange(value - 2)
+  const decrease = () => {
+    if (value > 2) onChange(value - 2)
+    else if (value === 2) onChange(1)
+  }
   const increase = () => onChange(value + 2)
   const handleManualChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value, 10)

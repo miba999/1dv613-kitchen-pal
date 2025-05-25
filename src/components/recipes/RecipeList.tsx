@@ -1,12 +1,24 @@
+import { useState, useEffect } from 'react'
 import RecipeCard from '@/components/recipes/RecipeCard'
 import LoadingSpinner from '@/components/ui/loading-spinner'
+import { Button } from '@/components/ui/button'
+import { Link } from 'react-router-dom'
 import { useRecipes } from '@/hooks/useRecipes'
+import SearchBar from '@/components/recipes/SearchBar'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IRecipeListProps {}
-
-const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
+const RecipeList: React.FC = () => {
   const { recipes, loading, error } = useRecipes()
+  const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState(search)
+
+  // ⏱ Debounce logic: update debouncedSearch after user stops typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [search])
 
   if (loading) {
     return (
@@ -22,21 +34,46 @@ const RecipeList: React.FunctionComponent<IRecipeListProps> = () => {
 
   if (recipes.length === 0) {
     return (
-      <div className="text-center mt-12">
-        <h2 className="text-xl font-semibold mb-2">Du har inga sparade recept ännu</h2>
-        <p className="text-muted-foreground">Skapa ett nytt recept för att komma igång!</p>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-4">
+        <div>
+          <h2 className="text-xl font-semibold mb-2">Du har inga sparade recept ännu</h2>
+          <p className="text-muted-foreground">Skapa ett nytt recept för att komma igång!</p>
+        </div>
+        <Button asChild>
+          <Link to="/recipes/new">Skapa nytt recept</Link>
+        </Button>
       </div>
     )
   }
 
+  const query = debouncedSearch.toLowerCase()
+
+  const filteredRecipes = recipes.filter(
+    (recipe) =>
+      recipe.title.toLowerCase().includes(query) ||
+      recipe.ingredients?.some((ing) => ing.name.toLowerCase().includes(query)) ||
+      recipe.tags?.some((tag) => tag.toLowerCase().includes(query))
+  )
+
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-6">Mina recept</h1>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
-      </div>
+      <h1 className="text-2xl font-bold mb-4">Mina recept</h1>
+
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Sök efter recept, ingrediens eller tagg..."
+      />
+
+      {filteredRecipes.length === 0 ? (
+        <p className="text-center text-muted-foreground mt-8">Inga recept matchade din sökning.</p>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          {filteredRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
