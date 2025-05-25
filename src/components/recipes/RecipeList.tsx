@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import RecipeCard from '@/components/recipes/RecipeCard'
 import LoadingSpinner from '@/components/ui/loading-spinner'
+import { Button } from '@/components/ui/button'
+import { Link } from 'react-router-dom'
 import { useRecipes } from '@/hooks/useRecipes'
 import SearchBar from '@/components/recipes/SearchBar'
 
@@ -32,9 +34,14 @@ const RecipeList: React.FC = () => {
 
   if (recipes.length === 0) {
     return (
-      <div className="text-center mt-12">
-        <h2 className="text-xl font-semibold mb-2">Du har inga sparade recept ännu</h2>
-        <p className="text-muted-foreground">Skapa ett nytt recept för att komma igång!</p>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center gap-4">
+        <div>
+          <h2 className="text-xl font-semibold mb-2">Du har inga sparade recept ännu</h2>
+          <p className="text-muted-foreground">Skapa ett nytt recept för att komma igång!</p>
+        </div>
+        <Button asChild>
+          <Link to="/recipes/new">Skapa nytt recept</Link>
+        </Button>
       </div>
     )
   }
