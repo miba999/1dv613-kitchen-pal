@@ -17,10 +17,10 @@ describe('parseIngredient', () => {
   })
 
   it('parses quantity without unit', () => {
-    expect(parseIngredient('3 vatten')).toEqual({
+    expect(parseIngredient('3 lök')).toEqual({
       quantity: 3,
       unit: '',
-      name: 'vatten',
+      name: 'lök',
     })
   })
 
@@ -36,6 +36,10 @@ describe('formatIngredient', () => {
     expect(formatIngredient({ quantity: 2, unit: 'dl', name: 'mjölk' })).toBe('2 dl mjölk')
   })
 
+  it('formats ingredient with only quantity', () => {
+    expect(formatIngredient({ quantity: 1, name: 'ägg' })).toBe('1 ägg')
+  })
+
   it('formats ingredient with only name', () => {
     expect(formatIngredient({ name: 'salt' })).toBe('salt')
   })
@@ -47,6 +51,14 @@ describe('formatIngredientParts', () => {
       qty: '1.5',
       unit: 'msk',
       name: 'olja',
+    })
+  })
+
+  it('handles only quantity', () => {
+    expect(formatIngredientParts({ quantity: 3, name: 'morötter' })).toEqual({
+      qty: '3',
+      unit: '',
+      name: 'morötter',
     })
   })
 
