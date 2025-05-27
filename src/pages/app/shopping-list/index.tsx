@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthUser } from '@/hooks/useAuthUser'
 import { useShoppingListStore } from '@/store/useShoppingListStore'
-import ShoppingListView from '@/components/shopping/ShoppingListView'
+import ShoppingList from '@/components/shopping/ShoppingListView'
 
 const ShoppingListPage: React.FC = () => {
   const { user, loading } = useAuthUser()
@@ -27,7 +27,7 @@ const ShoppingListPage: React.FC = () => {
       <div className="max-w-3xl mx-auto">
         <div className="rounded-lg border bg-card shadow-md p-6 relative">
           <h1 className="text-2xl font-bold mb-4">🛒 Inköpslista</h1>
-          <ShoppingListView />
+          <ShoppingList />
         </div>
       </div>
     </div>

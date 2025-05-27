@@ -2,7 +2,7 @@ import { useShoppingListStore } from '@/store/useShoppingListStore'
 import { useAuthUser } from '@/hooks/useAuthUser'
 import ShoppingListItemRow from '@/components/shopping/ShoppingListItemRow'
 
-export default function ShoppingListView() {
+export default function ShoppingList() {
   const { user } = useAuthUser()
   const items = useShoppingListStore((state) => state.items)
 
