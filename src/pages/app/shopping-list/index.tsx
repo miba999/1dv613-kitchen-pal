@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthUser } from '@/hooks/useAuthUser'
 import { useShoppingListStore } from '@/store/useShoppingListStore'
-import ShoppingList from '@/components/shopping/ShoppingListView'
+import ShoppingList from '@/components/shopping/ShoppingList'
 
 const ShoppingListPage: React.FC = () => {
   const { user, loading } = useAuthUser()
