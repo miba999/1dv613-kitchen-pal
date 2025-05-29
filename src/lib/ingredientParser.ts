@@ -62,8 +62,9 @@ export const formatIngredient = (ing: Ingredient): string => {
  * @returns An object with string parts: `qty`, `unit`, and `name`.
  */
 export const formatIngredientParts = (ing: Ingredient) => {
-  const qty = ing.quantity != null ? `${ing.quantity}` : ''
-  const unit = ing.unit ?? ''
+  const hasQuantity = typeof ing.quantity === 'number' && ing.quantity > 0
+  const qty = hasQuantity ? `${ing.quantity}` : ''
+  const unit = hasQuantity ? (ing.unit ?? '') : ''
   const name = ing.name
 
   return { qty, unit, name }
