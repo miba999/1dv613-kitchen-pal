@@ -47,7 +47,8 @@ export const parseIngredient = (raw: string): Ingredient => {
  * @returns A single string representing the ingredient.
  */
 export const formatIngredient = (ing: Ingredient): string => {
-  const qty = ing.quantity != null ? `${ing.quantity}${ing.unit ? ' ' + ing.unit : ''}` : ''
+  const hasQuantity = typeof ing.quantity === 'number' && ing.quantity > 0
+  const qty = hasQuantity ? `${ing.quantity}${ing.unit ? ' ' + ing.unit : ''}` : ''
 
   return [qty, ing.name].filter(Boolean).join(' ')
 }
