@@ -20,6 +20,7 @@ import RecipeEdit from '@/pages/app/recipes/edit'
 import Dashboard from '@/pages/app/dashboard'
 import Profile from '@/pages/app/profile'
 import ShoppingListPage from './pages/app/shopping-list/index.tsx'
+import PrivacyPage from './pages/public/privacy/index.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: '/', element: <PublicHome /> },
       { path: '/login', element: <Login /> },
       { path: '/signup', element: <Signup /> },
+      { path: '/privacy', element: <PrivacyPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
