@@ -30,11 +30,13 @@ const IngredientsSection: React.FC<IngredientsSectionProps> = ({
   return (
     <Card className="p-4 gap-2">
       <section aria-labelledby="ingredients-heading">
-        <div className="flex justify-between items-center gap-2 flex-wrap">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h2 className="text-xl font-semibold">Ingredienser</h2>
 
-          <div className="flex items-center gap-2">
-            <PortionAdjuster value={currentPortions} onChange={setCurrentPortions} />
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto pb-4">
+            <div className="sm:w-auto w-full">
+              <PortionAdjuster value={currentPortions} onChange={setCurrentPortions} />
+            </div>
 
             <Button
               size="sm"
