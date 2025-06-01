@@ -23,8 +23,8 @@ const ShoppingListPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-4 px-4">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-muted">
+      <div className="max-w-3xl mx-auto py-4 px-4">
         <div className="rounded-lg border bg-card shadow-md p-6 relative">
           <h1 className="text-2xl font-bold mb-4">🛒 Inköpslista</h1>
           <ShoppingList />
