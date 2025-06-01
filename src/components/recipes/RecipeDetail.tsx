@@ -59,7 +59,7 @@ const RecipeDetail: React.FC = () => {
   }))
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-6 space-y-4">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       {/* Edit Button */}
       <div className="flex justify-end">
         <Link to={`/recipes/${recipe.id}/edit`}>
@@ -71,7 +71,7 @@ const RecipeDetail: React.FC = () => {
       </div>
 
       {/* Title and Image */}
-      <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <div className="flex-1 space-y-2">
           <RecipeHeader
             title={recipe.title}
