@@ -18,7 +18,7 @@ import RecipeNew from '@/pages/app/recipes/new'
 import RecipeEdit from '@/pages/app/recipes/edit'
 
 import Dashboard from '@/pages/app/dashboard'
-import Profile from '@/pages/app/profile'
+// import Profile from '@/pages/app/profile'
 import ShoppingListPage from './pages/app/shopping-list/index.tsx'
 import PrivacyPage from './pages/public/privacy/index.tsx'
 
@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           { path: '/dashboard', element: <Dashboard /> },
-          { path: '/profile', element: <Profile /> },
+          // { path: '/profile', element: <Profile /> },
           { path: '/recipes', element: <RecipesPage /> },
           { path: '/recipes/new', element: <RecipeNew /> },
           { path: '/recipes/:id', element: <RecipeDetailPage /> },
