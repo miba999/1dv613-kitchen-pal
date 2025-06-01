@@ -48,7 +48,7 @@ const Header = () => {
           {user && (
             <>
               <NavLink to="/dashboard" className={linkClass}>
-                Dashboard
+                Översikt
               </NavLink>
               <NavLink to="/recipes" className={linkClass}>
                 Recept
@@ -94,7 +94,7 @@ const Header = () => {
           {user ? (
             <>
               <NavLink to="/dashboard" className={linkClass} onClick={closeMenu}>
-                Dashboard
+                Översikt
               </NavLink>
               <NavLink to="/recipes" className={linkClass} onClick={closeMenu}>
                 Recept
