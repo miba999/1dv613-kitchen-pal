@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
-import { cn } from '@/lib/utils' // Or replace with your classnames utility
+import { cn } from '@/lib/utils'
 
 interface StepCardProps {
   index: number
@@ -37,13 +37,15 @@ const StepCard = forwardRef<HTMLTextAreaElement, StepCardProps>(
       >
         <div className="flex items-center justify-between border-b border-muted pb-0.5 mb-1">
           <h3 className="text-base font-medium text-foreground">Steg {index + 1}</h3>
+
           {showRemove && (
             <Button
               type="button"
               variant="ghost"
               size="icon"
-              className="opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={onRemove}
+              aria-label={`Ta bort steg ${index + 1}`}
+              className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
             >
               <Trash2 className="w-4 h-4 text-destructive" />
             </Button>
@@ -58,7 +60,7 @@ const StepCard = forwardRef<HTMLTextAreaElement, StepCardProps>(
             else if (ref) ref.current = el
           }}
           value={value}
-          placeholder={`Beskriv vad som ska göras i detta steg`}
+          placeholder="Beskriv vad som ska göras i detta steg"
           onChange={(e) => onChange(e.target.value)}
           onFocus={onFocus}
           onBlur={onBlur}
