@@ -22,7 +22,6 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
     if (!draft.trim()) return
 
     const parsed = parseIngredient(draft)
-
     setIngredients([...ingredients, parsed])
     setDraft('')
 
@@ -72,7 +71,7 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
           <li
             key={index}
             className={cn(
-              'group flex items-center justify-between border rounded-md px-3 py-1 transition',
+              'group flex items-center gap-2 flex-wrap border rounded-md px-3 py-2 transition',
               editingIndex === index ? 'bg-muted ring-1 ring-ring shadow-sm' : 'hover:bg-muted/30'
             )}
           >
@@ -82,17 +81,16 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
                 autoFocus
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onBlur={(e) => handleUpdate(index, e.target.value)}
-                className="flex-1 bg-transparent outline-none text-sm"
-                style={{ padding: 0 }}
+                className="flex-1 bg-transparent outline-none text-sm min-w-[200px]"
               />
             ) : (
               <span
                 onClick={() => setEditingIndex(index)}
-                className="cursor-pointer text-sm flex-1"
+                className="cursor-pointer text-sm flex-1 min-w-[200px]"
               >
                 {(() => {
                   const { qty, unit, name } = formatIngredientParts(ing)
-                  
+
                   return (
                     <>
                       {qty && <strong>{qty}</strong>}
@@ -107,9 +105,10 @@ const IngredientInput: React.FC<IngredientInputProps> = ({ ingredients, setIngre
             <Button
               variant="ghost"
               size="icon"
-              className="opacity-0 group-hover:opacity-100 ml-2 transition-opacity"
+              className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
               type="button"
               onClick={() => handleRemove(index)}
+              aria-label="Ta bort ingrediens"
             >
               <Trash2 className="w-4 h-4 text-destructive" />
             </Button>
