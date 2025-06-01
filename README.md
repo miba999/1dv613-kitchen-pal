@@ -38,7 +38,7 @@
 1. Clone the project
 
 ```
-git clone https://github.com/miba999/kitchen-pal.git
+git clone https://github.com/miba999/1dv613-kitchen-pal.git
 cd kitchen-pal
 ```
 
