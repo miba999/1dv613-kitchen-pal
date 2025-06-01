@@ -22,22 +22,22 @@ const PublicHome: React.FunctionComponent<IPublicHomeProps> = () => {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center px-4 text-center">
-      <h1 className="text-4xl font-bold mb-4">
-        Välkommen till Kökskompanjonen 🍽️
-      </h1>
-      <p className="mb-6 text-muted-foreground max-w-md">
-        Samla, organisera och planera dina vardagsrecept. Skapa konto eller
-        logga in för att komma igång!
-      </p>
+    <main className="bg-slate-50 px-4 py-4 min-h-screen">
+      <div className="max-w-3xl mx-auto rounded-lg border bg-white shadow-sm p-6 text-center">
+        <h1 className="text-4xl font-bold mb-4">Välkommen till Kökskompanjonen 🍽️</h1>
+        <p className="mb-6 text-muted-foreground">
+          Samla, organisera och planera dina vardagsrecept. Skapa konto eller logga in för att komma
+          igång!
+        </p>
 
-      <div className="flex gap-4">
-        <Button asChild variant="outline">
-          <Link to="/login">Logga in</Link>
-        </Button>
-        <Button asChild>
-          <Link to="/signup">Skapa konto</Link>
-        </Button>
+        <div className="flex gap-4 justify-center">
+          <Button asChild variant="outline">
+            <Link to="/login">Logga in</Link>
+          </Button>
+          <Button asChild>
+            <Link to="/signup">Skapa konto</Link>
+          </Button>
+        </div>
       </div>
     </main>
   )
