@@ -56,15 +56,18 @@ const Header = () => {
               <NavLink to="/shopping-list" className={linkClass}>
                 Inköpslista
               </NavLink>
-              {/* <NavLink to="/profile" className={linkClass}>
-                Profil
-              </NavLink> */}
             </>
           )}
         </div>
 
-        {/* Right: auth buttons or user info */}
+        {/* Right: CTA + auth info */}
         <div className="flex items-center gap-4">
+          {user && (
+            <Button size="sm" asChild>
+              <Link to="/recipes/new">Nytt recept</Link>
+            </Button>
+          )}
+
           {user ? (
             <>
               <span className="hidden md:inline text-xs text-muted-foreground">{user.email}</span>
@@ -99,9 +102,14 @@ const Header = () => {
               <NavLink to="/shopping-list" className={linkClass} onClick={closeMenu}>
                 Inköpslista
               </NavLink>
-              {/* <NavLink to="/profile" className={linkClass} onClick={closeMenu}>
-                Profil
-              </NavLink> */}
+
+              {/* Mobile Nytt Recept button */}
+              <Button size="sm" variant="outline" asChild>
+                <Link to="/recipes/new" onClick={closeMenu}>
+                  Nytt recept
+                </Link>
+              </Button>
+
               <Button
                 variant="ghost"
                 size="sm"
