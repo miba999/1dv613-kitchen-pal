@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useAuthUser } from '@/hooks/useAuthUser'
 import { useRecipes } from '@/hooks/useRecipes'
 
 const DashboardPage: React.FC = () => {
-  const { user } = useAuthUser()
   const { recipes, loading } = useRecipes()
 
   const recentRecipes = [...recipes]
@@ -14,7 +12,7 @@ const DashboardPage: React.FC = () => {
     <main className="bg-muted min-h-screen py-4 px-4">
       <div className="max-w-4xl mx-auto bg-white border rounded-lg shadow p-6">
         {/* Welcome */}
-        <h1 className="text-2xl font-bold mb-2">Hej, {user?.email}! 👋</h1>
+        <h1 className="text-2xl font-bold mb-2">Hej! 👋</h1>
         <p className="text-muted-foreground mb-6">
           Välkommen tillbaka till ditt kök. Vad vill du göra idag?
         </p>
